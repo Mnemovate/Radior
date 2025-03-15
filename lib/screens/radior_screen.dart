@@ -21,11 +21,13 @@ class RadioStation {
   final String name;
   final String streamUrl;
   final String imageUrl;
+  final String description;
 
   RadioStation({
     required this.name,
     required this.streamUrl,
     required this.imageUrl,
+    required this.description,
   });
 }
 
@@ -43,19 +45,34 @@ class _RadioPlayerScreenState extends State<RadioPlayerScreen> {
   
   final List<RadioStation> stations = [
     RadioStation(
-      name: 'Radio Prambors',
-      streamUrl: 'https://23743.live.streamtheworld.com/PRAMBORS_FM.mp3',
-      imageUrl: 'https://upload.wikimedia.org/wikipedia/id/5/55/Prambors.png',
+      name: 'RRI Pro 1',
+      streamUrl: 'https://stream-node2.rri.co.id/streaming/14/9114/rripro1jakarta.mp3',
+      imageUrl: 'https://rri.co.id/assets/img/LOGO%20RRI%202021.png',
+      description: 'Kanal Informasi dan Inspirasi',
     ),
     RadioStation(
-      name: 'Radio RDI',
-      streamUrl: 'https://stream.radiojar.com/4ywdgup5mv8uv',
-      imageUrl: 'https://static.wikia.nocookie.net/logopedia/images/4/44/RDI_logo.jpg',
+      name: 'RRI Pro 2',
+      streamUrl: 'https://stream-node2.rri.co.id/streaming/14/9114/rripro2jakarta.mp3',
+      imageUrl: 'https://rri.co.id/assets/img/LOGO%20RRI%202021.png',
+      description: 'Kanal Kreativitas dan Hiburan',
     ),
     RadioStation(
-      name: 'Radio Hard Rock FM',
-      streamUrl: 'https://23743.live.streamtheworld.com/HARD_ROCK_FM.mp3',
-      imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/9/94/Hard_Rock_FM_%282021%29.png',
+      name: 'RRI Pro 3',
+      streamUrl: 'https://stream-node2.rri.co.id/streaming/18/9218/rripro3network.mp3',
+      imageUrl: 'https://rri.co.id/assets/img/LOGO%20RRI%202021.png',
+      description: 'Kanal Kebudayaan Indonesia',
+    ),
+    RadioStation(
+      name: 'RRI Pro 4',
+      streamUrl: 'https://stream-node2.rri.co.id/streaming/14/9114/rripro4jakarta.mp3',
+      imageUrl: 'https://rri.co.id/assets/img/LOGO%20RRI%202021.png',
+      description: 'Kanal Pendidikan dan Kebudayaan',
+    ),
+    RadioStation(
+      name: 'RRI World Service (Voice of Indonesia)',
+      streamUrl: 'https://stream-node2.rri.co.id/streaming/18/9218/voilintas.mp3',
+      imageUrl: 'https://voi.co.id/static/VOI-Logo-RedBlack.png',
+      description: 'Siaran Internasional RRI',
     ),
   ];
 
@@ -109,64 +126,119 @@ class _RadioPlayerScreenState extends State<RadioPlayerScreen> {
     
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Radior'),
+        title: const Text('Radio RRI'),
         centerTitle: true,
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Container(
-              width: 200,
-              height: 200,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(100),
-                image: DecorationImage(
-                  image: NetworkImage(currentStation.imageUrl),
-                  fit: BoxFit.cover,
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [Colors.red.shade100, Colors.white],
+          ),
+        ),
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                width: 200,
+                height: 200,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  image: DecorationImage(
+                    image: NetworkImage(currentStation.imageUrl),
+                    fit: BoxFit.contain,
+                  ),
+                  boxShadow: const [
+                    BoxShadow(
+                      color: Colors.black26,
+                      offset: Offset(0, 4),
+                      blurRadius: 10.0,
+                    ),
+                  ],
                 ),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black26,
-                    offset: Offset(0, 4),
-                    blurRadius: 10.0,
+              ),
+              const SizedBox(height: 30),
+              Text(
+                currentStation.name,
+                style: const TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(height: 10),
+              Text(
+                currentStation.description,
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.red.shade700,
+                  fontStyle: FontStyle.italic,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 50),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  IconButton(
+                    icon: const Icon(Icons.skip_previous, size: 40),
+                    onPressed: previousStation,
+                  ),
+                  const SizedBox(width: 20),
+                  Container(
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Colors.red.shade50,
+                      boxShadow: const [
+                        BoxShadow(
+                          color: Colors.black12,
+                          blurRadius: 10,
+                          spreadRadius: 2,
+                        ),
+                      ],
+                    ),
+                    child: IconButton(
+                      icon: Icon(
+                        isPlaying ? Icons.pause_circle_filled : Icons.play_circle_filled,
+                        size: 80,
+                        color: Colors.red,
+                      ),
+                      onPressed: playOrPause,
+                    ),
+                  ),
+                  const SizedBox(width: 20),
+                  IconButton(
+                    icon: const Icon(Icons.skip_next, size: 40),
+                    onPressed: nextStation,
                   ),
                 ],
               ),
-            ),
-            const SizedBox(height: 40),
-            Text(
-              currentStation.name,
-              style: const TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            const SizedBox(height: 60),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                IconButton(
-                  icon: const Icon(Icons.skip_previous, size: 40),
-                  onPressed: previousStation,
+              const SizedBox(height: 40),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(20),
+                  boxShadow: const [
+                    BoxShadow(
+                      color: Colors.black12,
+                      blurRadius: 5,
+                      spreadRadius: 1,
+                    ),
+                  ],
                 ),
-                const SizedBox(width: 20),
-                IconButton(
-                  icon: Icon(
-                    isPlaying ? Icons.pause_circle_filled : Icons.play_circle_filled,
-                    size: 60,
-                    color: Colors.blue,
+                child: Text(
+                  isPlaying ? "Sedang Memutar..." : "Siap Diputar",
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: isPlaying ? Colors.red : Colors.grey,
                   ),
-                  onPressed: playOrPause,
                 ),
-                const SizedBox(width: 20),
-                IconButton(
-                  icon: const Icon(Icons.skip_next, size: 40),
-                  onPressed: nextStation,
-                ),
-              ],
-            ),
-          ],
+              ),
+            ],
+          ),
         ),
       ),
     );
