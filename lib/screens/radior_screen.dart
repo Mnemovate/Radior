@@ -41,25 +41,67 @@ class RadioPlayerScreen extends StatefulWidget {
 class _RadioPlayerScreenState extends State<RadioPlayerScreen> {
   final AudioPlayer audioPlayer = AudioPlayer();
   bool isPlaying = false;
+  bool isLoading = false;
   int currentStationIndex = 0;
+  String errorMessage = '';
   
   final List<RadioStation> stations = [
+    // URL alternatif yang lebih stabil untuk streaming RRI
     RadioStation(
       name: 'Pusat Pemberitaan',
-      streamUrl: 'https://stream-node0.rri.co.id/streaming/14/9014/kbrn.mp3',
+      streamUrl: 'https://cdnjakartapro.rri.co.id/web-kbrn.mp3',
       imageUrl: 'https://www.rri.co.id/assets/v2/img/pro3.png',
       description: 'Pusat Pemberitaan',
+    ),
+    RadioStation(
+      name: 'RRI Pro 1 Jakarta',
+      streamUrl: 'https://cdnjakartapro.rri.co.id/web-jakartapro1.mp3',
+      imageUrl: 'https://www.rri.co.id/assets/v2/img/pro1.png',
+      description: 'Kanal Informasi dan Inspirasi',
+    ),
+    RadioStation(
+      name: 'RRI Pro 2 Jakarta',
+      streamUrl: 'https://cdnjakartapro.rri.co.id/web-jakartapro2.mp3',
+      imageUrl: 'https://www.rri.co.id/assets/v2/img/pro2.png',
+      description: 'Kanal Kreativitas dan Hiburan',
     ),
   ];
 
   @override
   void initState() {
     super.initState();
+    
+    // Menambahkan listener untuk status pemutaran
     audioPlayer.onPlayerStateChanged.listen((PlayerState state) {
       setState(() {
         isPlaying = state == PlayerState.playing;
+        if (state == PlayerState.playing) {
+          isLoading = false;
+        }
       });
     });
+    
+    // // Tambahkan listener untuk error
+    // audioPlayer.onPlayerError.listen((String error) {
+    //   setState(() {
+    //     isPlaying = false;
+    //     isLoading = false;
+    //     errorMessage = 'Gagal memutar audio: $error';
+        
+    //     // Tampilkan notifikasi error
+    //     ScaffoldMessenger.of(context).showSnackBar(
+    //       SnackBar(
+    //         content: Text('Gagal memainkan audio. Coba URL yang lain.'),
+    //         backgroundColor: Colors.red,
+    //       ),
+    //     );
+    //   });
+      
+    //   print('Error: $error'); // Log error untuk debugging
+    // });
+    
+    // Preload URL pertama
+    audioPlayer.setSourceUrl(stations[currentStationIndex].streamUrl);
   }
 
   @override
@@ -69,30 +111,63 @@ class _RadioPlayerScreenState extends State<RadioPlayerScreen> {
   }
 
   Future<void> playOrPause() async {
-    if (isPlaying) {
-      await audioPlayer.pause();
-    } else {
-      await audioPlayer.play(UrlSource(stations[currentStationIndex].streamUrl));
+    setState(() {
+      isLoading = true;
+      errorMessage = '';
+    });
+    
+    try {
+      if (isPlaying) {
+        await audioPlayer.pause();
+        setState(() {
+          isLoading = false;
+        });
+      } else {
+        // Gunakan metode dengan sourcePath yang lebih eksplisit
+        await audioPlayer.play(UrlSource(stations[currentStationIndex].streamUrl), mode: PlayerMode.mediaPlayer);
+      }
+    } catch (e) {
+      setState(() {
+        isLoading = false;
+        errorMessage = e.toString();
+      });
+      print('Exception: $e'); // Log exception untuk debugging
     }
   }
 
   void nextStation() {
     setState(() {
       currentStationIndex = (currentStationIndex + 1) % stations.length;
+      errorMessage = '';
     });
+    
+    // Hentikan pemutaran saat ini
+    audioPlayer.stop();
+    
+    // Jika sedang memutar, langsung putar stasiun berikutnya
     if (isPlaying) {
-      audioPlayer.stop();
-      audioPlayer.play(UrlSource(stations[currentStationIndex].streamUrl));
+      setState(() {
+        isLoading = true;
+      });
+      audioPlayer.play(UrlSource(stations[currentStationIndex].streamUrl), mode: PlayerMode.mediaPlayer);
     }
   }
 
   void previousStation() {
     setState(() {
       currentStationIndex = (currentStationIndex - 1 + stations.length) % stations.length;
+      errorMessage = '';
     });
+    
+    // Hentikan pemutaran saat ini
+    audioPlayer.stop();
+    
+    // Jika sedang memutar, langsung putar stasiun sebelumnya
     if (isPlaying) {
-      audioPlayer.stop();
-      audioPlayer.play(UrlSource(stations[currentStationIndex].streamUrl));
+      setState(() {
+        isLoading = true;
+      });
+      audioPlayer.play(UrlSource(stations[currentStationIndex].streamUrl), mode: PlayerMode.mediaPlayer);
     }
   }
 
@@ -102,7 +177,7 @@ class _RadioPlayerScreenState extends State<RadioPlayerScreen> {
     
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Radior'),
+        title: const Text('Radio RRI'),
         centerTitle: true,
       ),
       body: Container(
@@ -153,6 +228,14 @@ class _RadioPlayerScreenState extends State<RadioPlayerScreen> {
                 ),
                 textAlign: TextAlign.center,
               ),
+              if (errorMessage.isNotEmpty)
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    'Error: $errorMessage',
+                    style: TextStyle(color: Colors.red, fontSize: 12),
+                  ),
+                ),
               const SizedBox(height: 50),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -174,13 +257,27 @@ class _RadioPlayerScreenState extends State<RadioPlayerScreen> {
                         ),
                       ],
                     ),
-                    child: IconButton(
-                      icon: Icon(
-                        isPlaying ? Icons.pause_circle_filled : Icons.play_circle_filled,
-                        size: 80,
-                        color: Colors.red,
-                      ),
-                      onPressed: playOrPause,
+                    child: Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        IconButton(
+                          icon: Icon(
+                            isPlaying ? Icons.pause_circle_filled : Icons.play_circle_filled,
+                            size: 80,
+                            color: Colors.red,
+                          ),
+                          onPressed: playOrPause,
+                        ),
+                        if (isLoading)
+                          SizedBox(
+                            width: 80,
+                            height: 80,
+                            child: CircularProgressIndicator(
+                              strokeWidth: 3,
+                              valueColor: AlwaysStoppedAnimation<Color>(Colors.red.shade300),
+                            ),
+                          ),
+                      ],
                     ),
                   ),
                   const SizedBox(width: 20),
@@ -205,11 +302,11 @@ class _RadioPlayerScreenState extends State<RadioPlayerScreen> {
                   ],
                 ),
                 child: Text(
-                  isPlaying ? "Sedang Memutar..." : "Siap Diputar",
+                  isLoading ? "Memuat..." : isPlaying ? "Sedang Memutar..." : "Siap Diputar",
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
-                    color: isPlaying ? Colors.red : Colors.grey,
+                    color: isLoading ? Colors.orange : isPlaying ? Colors.red : Colors.grey,
                   ),
                 ),
               ),

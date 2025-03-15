@@ -1,4 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Tambahkan izin internet di sini -->
+    <uses-permission android:name="android.permission.INTERNET"/>
+
     <application
         android:label="radior"
         android:name="${applicationName}"
