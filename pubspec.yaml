@@ -10,6 +10,7 @@ dependencies:
   flutter:
     sdk: flutter
   audioplayers: ^6.4.0
+  radio_player: ^1.7.1
 
 dev_dependencies:
   flutter_test:
