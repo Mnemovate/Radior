@@ -45,34 +45,10 @@ class _RadioPlayerScreenState extends State<RadioPlayerScreen> {
   
   final List<RadioStation> stations = [
     RadioStation(
-      name: 'RRI Pro 1',
-      streamUrl: 'https://stream-node2.rri.co.id/streaming/14/9114/rripro1jakarta.mp3',
-      imageUrl: 'https://rri.co.id/assets/img/LOGO%20RRI%202021.png',
-      description: 'Kanal Informasi dan Inspirasi',
-    ),
-    RadioStation(
-      name: 'RRI Pro 2',
-      streamUrl: 'https://stream-node2.rri.co.id/streaming/14/9114/rripro2jakarta.mp3',
-      imageUrl: 'https://rri.co.id/assets/img/LOGO%20RRI%202021.png',
-      description: 'Kanal Kreativitas dan Hiburan',
-    ),
-    RadioStation(
-      name: 'RRI Pro 3',
-      streamUrl: 'https://stream-node2.rri.co.id/streaming/18/9218/rripro3network.mp3',
-      imageUrl: 'https://rri.co.id/assets/img/LOGO%20RRI%202021.png',
-      description: 'Kanal Kebudayaan Indonesia',
-    ),
-    RadioStation(
-      name: 'RRI Pro 4',
-      streamUrl: 'https://stream-node2.rri.co.id/streaming/14/9114/rripro4jakarta.mp3',
-      imageUrl: 'https://rri.co.id/assets/img/LOGO%20RRI%202021.png',
-      description: 'Kanal Pendidikan dan Kebudayaan',
-    ),
-    RadioStation(
-      name: 'RRI World Service (Voice of Indonesia)',
-      streamUrl: 'https://stream-node2.rri.co.id/streaming/18/9218/voilintas.mp3',
-      imageUrl: 'https://voi.co.id/static/VOI-Logo-RedBlack.png',
-      description: 'Siaran Internasional RRI',
+      name: 'Pusat Pemberitaan',
+      streamUrl: 'https://stream-node0.rri.co.id/streaming/14/9014/kbrn.mp3',
+      imageUrl: 'https://www.rri.co.id/assets/v2/img/pro3.png',
+      description: 'Pusat Pemberitaan',
     ),
   ];
 
@@ -126,7 +102,7 @@ class _RadioPlayerScreenState extends State<RadioPlayerScreen> {
     
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Radio RRI'),
+        title: const Text('Radior'),
         centerTitle: true,
       ),
       body: Container(
