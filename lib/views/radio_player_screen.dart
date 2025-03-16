@@ -18,17 +18,10 @@ class RadioPlayerScreen extends StatelessWidget {
       ),
       body: BlocBuilder<RadioBloc, RadioState>(
         builder: (context, state) {
-          String stationName = 'Memuat stasiun...';
-          if (state is RadioPlaying) {
-            stationName = state.station.name;
-          } else if (state is RadioPaused) {
-            stationName = 'Radio dijeda';
-          }
-
           return Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(stationName, style: const TextStyle(fontSize: 24)),
+              Text(state is RadioPlaying ? state.station.name : state is RadioPaused ? 'Radio dijeda' : 'Memuat stasiun...', style: const TextStyle(fontSize: 24)),
               const SizedBox(height: 20),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
