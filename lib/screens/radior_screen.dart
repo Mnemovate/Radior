@@ -46,24 +46,65 @@ class _RadioPlayerScreenState extends State<RadioPlayerScreen> {
   String errorMessage = '';
   
   final List<RadioStation> stations = [
-    // URL alternatif yang lebih stabil untuk streaming RRI
     RadioStation(
-      name: 'Pusat Pemberitaan',
-      streamUrl: 'https://cdnjakartapro.rri.co.id/web-kbrn.mp3',
-      imageUrl: 'https://www.rri.co.id/assets/v2/img/pro3.png',
-      description: 'Pusat Pemberitaan',
+      name: 'Jakarta - 92.0 fm',
+      streamUrl: 'https://cast1.my-control-panel.com/proxy/radioso1/stream',
+      imageUrl: 'https://www.sonora.co.id//assets/v2/images/network/jakarta.png',
+      description: '...',
     ),
     RadioStation(
-      name: 'RRI Pro 1 Jakarta',
-      streamUrl: 'https://cdnjakartapro.rri.co.id/web-jakartapro1.mp3',
-      imageUrl: 'https://www.rri.co.id/assets/v2/img/pro1.png',
-      description: 'Kanal Informasi dan Inspirasi',
+      name: 'Surabaya - 98.0 fm',
+      streamUrl: 'https://cast3.asurahosting.com/proxy/radios25/stream',
+      imageUrl: 'https://www.sonora.co.id//assets/v2/images/network/surabaya.png',
+      description: '...',
     ),
     RadioStation(
-      name: 'RRI Pro 2 Jakarta',
-      streamUrl: 'https://cdnjakartapro.rri.co.id/web-jakartapro2.mp3',
-      imageUrl: 'https://www.rri.co.id/assets/v2/img/pro2.png',
-      description: 'Kanal Kreativitas dan Hiburan',
+      name: 'Palembang - 102.6 fm',
+      streamUrl: 'https://cast2.my-control-panel.com/proxy/radios21/stream',
+      imageUrl: 'https://www.sonora.co.id//assets/v2/images/network/palembang.png',
+      description: '...',
+    ),
+    RadioStation(
+      name: 'Yogyakarta - 97.4 fm',
+      streamUrl: 'https://cast3.asurahosting.com/proxy/radios28/stream',
+      imageUrl: 'https://www.sonora.co.id//assets/v2/images/network/yogyakarta.png',
+      description: '...',
+    ),
+    RadioStation(
+      name: 'Semarang - 98.9 fm',
+      streamUrl: 'https://cast3.asurahosting.com/proxy/radios30/stream',
+      imageUrl: 'https://www.sonora.co.id//assets/v2/images/network/semarang.png',
+      description: '...',
+    ),
+    RadioStation(
+      name: 'Pangkalpinang - 101.1 fm',
+      streamUrl: 'https://cast2.my-control-panel.com/proxy/radios18/stream',
+      imageUrl: 'https://www.sonora.co.id//assets/v2/images/network/pangkalpinang.png',
+      description: '...',
+    ),
+    RadioStation(
+      name: 'Pontianak - 96.7 fm',
+      streamUrl: 'https://cast3.asurahosting.com/proxy/radios29/stream',
+      imageUrl: 'https://www.sonora.co.id//assets/v2/images/network/pontianak.png',
+      description: '...',
+    ),
+    RadioStation(
+      name: 'Bali - 98.9 fm',
+      streamUrl: 'https://cast1.my-control-panel.com/proxy/radios12/stream',
+      imageUrl: 'https://www.sonora.co.id//assets/v2/images/network/bali.png',
+      description: '...',
+    ),
+    RadioStation(
+      name: 'Solo - 98.8 fm',
+      streamUrl: 'https://cast1.my-control-panel.com/proxy/radioso6/stream',
+      imageUrl: 'https://www.sonora.co.id//assets/v2/images/network/solo.png',
+      description: '...',
+    ),
+    RadioStation(
+      name: 'Prima Pangkalpinang - 105.9 fm',
+      streamUrl: 'https://cast2.my-control-panel.com/proxy/radioso7/stream',
+      imageUrl: 'https://www.sonora.co.id//assets/v2/images/network/prima-pangkalpinang.png',
+      description: '...',
     ),
   ];
 
@@ -177,7 +218,7 @@ class _RadioPlayerScreenState extends State<RadioPlayerScreen> {
     
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Radio RRI'),
+        title: const Text('Radior'),
         centerTitle: true,
       ),
       body: Container(
