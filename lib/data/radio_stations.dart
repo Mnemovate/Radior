@@ -1,5 +1,8 @@
 import 'package:radior/models/radio_station.dart';
 
+// Thanks to Sonora Network for providing the stream URLs
+// https://www.sonora.co.id/network
+
 final List<RadioStation> stations = [
   RadioStation(
     name: 'Jakarta - 92.0 fm',
