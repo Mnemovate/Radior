@@ -82,12 +82,6 @@ final List<RadioStation> stations = [
     description: 'pop, talk, easy listening',
   ),
   RadioStation(
-    name: 'Prambors FM',
-    streamUrl: 'https://rust.mrngroup.co:8040/stream',
-    imageUrl: 'https://cdn.onlineradiobox.com/img/l/7/18687.v37.png',
-    description: 'rock, pop, news, adult contemporary, hits',
-  ),
-  RadioStation(
     name: 'I Radio',
     streamUrl: 'https://stream.radiojar.com/4ywdgup3bnzuv',
     imageUrl: 'https://cdn.onlineradiobox.com/img/l/9/18959.v10.png',
