@@ -82,7 +82,10 @@ class RadioPlayerScreen extends StatelessWidget {
                 children: [
                   IconButton(
                     icon: const Icon(Icons.skip_previous),
-                    onPressed: () => bloc.add(PreviousStationEvent()),
+                    onPressed: () {
+                      bloc.add(PlayPauseEvent());
+                      bloc.add(PreviousStationEvent());
+                    },
                   ),
                   Icon(Icons.replay_10),
                   Container(
@@ -101,7 +104,10 @@ class RadioPlayerScreen extends StatelessWidget {
                   Icon(Icons.forward_10),
                   IconButton(
                     icon: const Icon(Icons.skip_next),
-                    onPressed: () => bloc.add(NextStationEvent()),
+                    onPressed: () {
+                      bloc.add(PlayPauseEvent());
+                      bloc.add(NextStationEvent());
+                    },
                   ),
                 ],
               ),
