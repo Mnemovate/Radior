@@ -30,6 +30,9 @@ class RadioPlayerScreen extends StatelessWidget {
       backgroundColor: Colors.white,
       body: BlocBuilder<RadioBloc, RadioState>(
         builder: (context, state) {
+          String imageUrl = state is RadioPlaying
+            ? state.station.imageUrl
+            : 'https://www.sonora.co.id//assets/v2/images/network/surabaya.png';
           return Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -38,7 +41,7 @@ class RadioPlayerScreen extends StatelessWidget {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(20.0),
                   child: Image.network(
-                    'https://www.sonora.co.id//assets/v2/images/network/surabaya.png',
+                    imageUrl,
                     height: 300,
                     fit: BoxFit.cover,
                   ),
