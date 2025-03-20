@@ -43,28 +43,3 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
-
-# iOS/XCode related
-**/ios/Flutter/Generated.xcconfig
-**/ios/*.xcconfig
-**/ios/Podfile.lock
-**/ios/Pods/
-**/ios/.symlinks/
-**/ios/Flutter/App.framework
-**/ios/Flutter/Flutter.framework
-**/ios/Flutter/Flutter.podspec
-**/ios/Flutter/flutter_export_environment.sh
-
-# macOS related
-**/macos/Flutter/GeneratedPluginRegistrant.swift
-**/macos/Flutter/Flutter-Debug.xcconfig
-**/macos/Flutter/Flutter-Release.xcconfig
-**/macos/Pods/
-**/macos/Podfile.lock
-
-# Generated files
-**/linux/flutter/generated_plugin_registrant.cc
-**/linux/flutter/generated_plugins.cmake
-**/windows/flutter/generated_plugin_registrant.cc
-**/windows/flutter/generated_plugins.cmake
-**/lib/generated_plugin_registrant.dart
