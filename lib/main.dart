@@ -29,6 +29,8 @@ class _RadiorState extends State<Radior> with WidgetsBindingObserver {
     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
       systemNavigationBarColor: RadiorColor.white,
       systemNavigationBarIconBrightness: Brightness.dark,
+      statusBarIconBrightness: Brightness.dark,
+      statusBarColor: RadiorColor.white,
     ));
   }
 
