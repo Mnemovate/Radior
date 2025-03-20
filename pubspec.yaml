@@ -12,6 +12,7 @@ dependencies:
   audioplayers: ^6.4.0
   flutter_bloc: ^9.1.0
   percent_indicator: ^4.2.4
+  flutter_svg: ^2.0.17
 
 dev_dependencies:
   flutter_test:
@@ -20,3 +21,6 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+
+  assets:
+    - assets/images/
