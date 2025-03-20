@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:radior/helpers/image_helper.dart';
 
 class OnboardingScreen extends StatelessWidget {
   const OnboardingScreen({super.key});
@@ -6,8 +7,13 @@ class OnboardingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Text('Onboarding Screen'),
+      body: Column(
+        children: [
+          RadiorLocal.svg(
+            'onboarding.svg',
+          ),
+          Text('Onboarding Screen'),
+        ],
       ),
     );
   }
