@@ -50,7 +50,7 @@ class _RadiorState extends State<Radior> with WidgetsBindingObserver {
       ),
       home: BlocProvider(
         create: (context) => RadioBloc(stations),
-        child: const OnboardingScreen(),
+        child: SafeArea(child: const OnboardingScreen()),
       ),
     );
   }
