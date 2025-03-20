@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
 
-class Radior {
+class RadiorColor {
   static const Color white = Color(0xffFFFFFF);
 }
