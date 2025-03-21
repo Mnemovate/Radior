@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:radior/helpers/image_helper.dart';
-import 'package:radior/theme/text.dart';
+import 'package:radior/themes/sizes.dart';
+import 'package:radior/themes/texts.dart';
+import 'package:radior/widgets/button.dart';
 
 class OnboardingScreen extends StatelessWidget {
   const OnboardingScreen({super.key});
@@ -11,23 +13,29 @@ class OnboardingScreen extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 22),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height: 100),
             RadiorLocal.svg(
               'onboarding.svg',
               width: MediaQuery.of(context).size.width,
               fit: BoxFit.fitWidth,
             ),
-            SizedBox(height: 30),
+            spaceHeight50,
             Text(
-              'Radio Kesayanganmu',
+              'Streaming Radio Favoritmu',
               style: titleOnboarding,
             ),
-            SizedBox(height: 20),
+            spaceHeigh20,
             Text(
-              'Dengarkan musik & siaran favorit, kapan saja!',
+              'Nikmati siaran langsung, musik, dan podcast eksklusif dalam satu aplikasi.',
               style: descriptionOnboarding,
-            )
+            ),
+            spaceHeight60,
+            Button(
+              text: 'Start using', 
+              onPressed: () {},
+            ),
           ],
         ),
       ),
