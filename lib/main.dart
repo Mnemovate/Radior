@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:radior/bloc/radio_bloc.dart';
 import 'package:radior/data/radio_stations.dart';
 import 'package:radior/screens/onboarding_screen.dart';
-import 'package:radior/theme/color.dart';
+import 'package:radior/themes/colors.dart';
 
 void main() {
   runApp(Radior());
