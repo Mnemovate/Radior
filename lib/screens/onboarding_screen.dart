@@ -74,6 +74,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> with SingleTickerPr
       body: Stack(
         children: [
           PageView(
+            physics: const NeverScrollableScrollPhysics(),
             controller: _pageController,
             onPageChanged: (int page) {
               setState(() {
@@ -153,6 +154,22 @@ class _OnboardingScreenState extends State<OnboardingScreen> with SingleTickerPr
                     ),
                   ),
                 ),
+              ),
+            ),
+          ),
+
+          // Skip button
+          Positioned(
+            top: 60,
+            right: 20,
+            child: TextButton(
+              onPressed: () {
+                _animationController.stop();
+                Navigator.of(context).pushReplacementNamed('/home');
+              },
+              child: Text(
+                'Skip',
+                style: descriptionOnboarding,
               ),
             ),
           ),
