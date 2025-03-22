@@ -61,6 +61,28 @@ class _OnboardingScreenState extends State<OnboardingScreen> with SingleTickerPr
     _animationController.forward();
   }
 
+  // Skip to the last onboarding screen
+  void _skipToLastOnboarding() {
+    _animationController.stop();
+    _pageController.animateToPage(
+      _totalPages - 1,
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.easeInOut,
+    );
+    // Restart the timer for the last page
+    _startTimerForPage();
+  }
+
+  void _navigateToHomeScreen() {
+    // Stop the animation
+    _animationController.stop();
+    
+    // Navigate to the home screen
+    Navigator.of(context).pushReplacement(
+      MaterialPageRoute(builder: (context) => const HomeScreen()),
+    );
+  }
+
   @override
   void dispose() {
     _pageController.dispose();
@@ -120,8 +142,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> with SingleTickerPr
                 description: 'Akses siaran radio kapan saja dan dimana saja, bahkan tanpa koneksi internet.',
                 buttonText: 'Mulai Sekarang',
                 onPressed: () {
-                  // Navigate to the main app screen
-                  Navigator.of(context).pushReplacementNamed('/home');
+                  _navigateToHomeScreen();
                 },
               ),
             ],
@@ -164,8 +185,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> with SingleTickerPr
             right: 20,
             child: TextButton(
               onPressed: () {
-                _animationController.stop();
-                Navigator.of(context).pushReplacementNamed('/home');
+                _skipToLastOnboarding();
               },
               child: Text(
                 'Skip',
