@@ -5,8 +5,8 @@ import 'package:radior/bloc/radio_event.dart';
 import 'package:radior/bloc/radio_state.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
-class RadioPlayerScreen extends StatelessWidget {
-  const RadioPlayerScreen({super.key});
+class HomeScreen extends StatelessWidget {
+  const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
