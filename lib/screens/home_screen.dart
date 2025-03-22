@@ -4,6 +4,8 @@ import 'package:radior/bloc/radio_bloc.dart';
 import 'package:radior/bloc/radio_event.dart';
 import 'package:radior/bloc/radio_state.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
+import 'package:radior/themes/colors.dart';
+import 'package:radior/themes/texts.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -19,15 +21,13 @@ class HomeScreen extends StatelessWidget {
           padding: const EdgeInsets.only(top: 30),
           child: Text(
             'Radior',
-            style: TextStyle(
-              color: Colors.green,
-              fontWeight: FontWeight.bold,
-              fontSize: 30,
+            style: titleOnboarding.copyWith(
+              color: RadiorColor.green,
             ),
           ),
         ),
       ),
-      backgroundColor: Colors.white,
+      backgroundColor: RadiorColor.white,
       body: BlocBuilder<RadioBloc, RadioState>(
         builder: (context, state) {
           String imageUrl = state is RadioPlaying
@@ -53,11 +53,11 @@ class HomeScreen extends StatelessWidget {
                     : state is RadioPaused
                     ? 'Radio dijeda'
                     : 'Memuat stasiun...',
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                style: descriptionOnboarding.copyWith(color: RadiorColor.black),
               ),
               Text(
                 state is RadioPlaying ? state.station.description : "...",
-                style: TextStyle(fontSize: 16, color: Colors.grey),
+                style: descriptionOnboarding.copyWith(color: RadiorColor.black),
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(
@@ -67,8 +67,8 @@ class HomeScreen extends StatelessWidget {
                 child: LinearPercentIndicator(
                   lineHeight: 8.0,
                   percent: 0.9,
-                  progressColor: Colors.green,
-                  backgroundColor: Colors.grey.shade300,
+                  progressColor: RadiorColor.green,
+                  backgroundColor: RadiorColor.green80,
                   barRadius: Radius.circular(10),
                 ),
               ),
@@ -93,13 +93,13 @@ class HomeScreen extends StatelessWidget {
                   Icon(Icons.replay_10),
                   Container(
                     decoration: BoxDecoration(
-                      color: Colors.green,
+                      color: RadiorColor.green,
                       shape: BoxShape.circle,
                     ),
                     child: IconButton(
                       icon: Icon(
                         state is RadioPlaying ? Icons.pause : Icons.play_arrow,
-                        color: Colors.white,
+                        color: RadiorColor.white,
                       ),
                       onPressed: () => bloc.add(PlayPauseEvent()),
                     ),
