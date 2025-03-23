@@ -42,7 +42,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> with SingleTickerPr
       if (_animationController.isCompleted) {
         if (_currentPage < _totalPages - 1) {
           _pageController.nextPage(
-            duration: const Duration(milliseconds: 300),
+            duration: const Duration(milliseconds: 500),
             curve: Curves.easeInOut,
           );
         } else {
@@ -108,7 +108,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> with SingleTickerPr
             children: [
               // First onboarding screen
               _buildOnboardingPage(
-                imageName: 'onboarding.svg',
+                imageName: 'test3.svg',
                 title: 'Streaming Radio Favoritmu',
                 description: 'Nikmati siaran langsung, musik, dan podcast eksklusif dalam satu aplikasi.',
                 buttonText: 'Lanjutkan',
@@ -123,7 +123,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> with SingleTickerPr
               
               // Second onboarding screen
               _buildOnboardingPage(
-                imageName: 'onboarding.svg',
+                imageName: 'test3.svg',
                 title: 'Temukan Channel Favorit',
                 description: 'Jelajahi ratusan stasiun radio lokal dan internasional dengan kualitas audio terbaik.',
                 buttonText: 'Selanjutnya',
@@ -138,7 +138,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> with SingleTickerPr
               
               // Third onboarding screen
               _buildOnboardingPage(
-                imageName: 'onboarding.svg',
+                imageName: 'test3.svg',
                 title: 'Dengarkan Dimana Saja',
                 description: 'Akses siaran radio kapan saja dan dimana saja, bahkan tanpa koneksi internet.',
                 buttonText: 'Mulai Sekarang',
@@ -151,18 +151,18 @@ class _OnboardingScreenState extends State<OnboardingScreen> with SingleTickerPr
 
           // Progress indicators at top
           Positioned(
-            top: 40,
+            top: 50,
             left: 0,
             right: 0,
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
+              padding: const EdgeInsets.symmetric(horizontal: 15),
               child: Row(
                 children: List.generate(
                   _totalPages,
                   (index) => Expanded(
                     child: Container(
-                      margin: const EdgeInsets.symmetric(horizontal: 4),
-                      height: 4,
+                      margin: const EdgeInsets.symmetric(horizontal: 8),
+                      height: 6,
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(2),
                         child: LinearProgressIndicator(
@@ -182,9 +182,21 @@ class _OnboardingScreenState extends State<OnboardingScreen> with SingleTickerPr
 
           // Skip button
           Positioned(
-            top: 60,
-            right: 20,
+            top: 80,
+            right: 23,
             child: TextButton(
+              style: TextButton.styleFrom(
+                enabledMouseCursor: SystemMouseCursors.click,
+                backgroundColor: RadiorColor.white,
+                minimumSize: Size.zero,
+                overlayColor: RadiorColor.white,
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
+                elevation: 0,
+                padding: EdgeInsets.zero,
+                visualDensity: VisualDensity.adaptivePlatformDensity,
+                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                animationDuration: Duration(milliseconds: 500),
+              ),
               onPressed: () {
                 _skipToLastOnboarding();
               },
@@ -207,10 +219,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> with SingleTickerPr
     required VoidCallback onPressed,
   }) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 22),
+      padding: const EdgeInsets.symmetric(horizontal: 23),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           RadiorLocal.svg(
             imageName,
@@ -221,11 +233,13 @@ class _OnboardingScreenState extends State<OnboardingScreen> with SingleTickerPr
           Text(
             title,
             style: titleOnboarding,
+            textAlign: TextAlign.center,
           ),
           spaceHeigh20,
           Text(
             description,
             style: descriptionOnboarding,
+            textAlign: TextAlign.center,
           ),
           spaceHeight60,
           Button(
@@ -235,5 +249,5 @@ class _OnboardingScreenState extends State<OnboardingScreen> with SingleTickerPr
         ],
       ),
     );
-  } 
+  }
 }

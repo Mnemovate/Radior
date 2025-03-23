@@ -15,10 +15,16 @@ class Button extends StatelessWidget {
       height: 56,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
+          enabledMouseCursor: SystemMouseCursors.click,
           backgroundColor: RadiorColor.green,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(6),
           ),
+          visualDensity: VisualDensity.adaptivePlatformDensity,
+          animationDuration: Duration(milliseconds: 500),
+          elevation: 0,
+          shadowColor: Colors.transparent,
+          tapTargetSize: MaterialTapTargetSize.shrinkWrap,
         ),
         onPressed: onPressed,
         child: Padding(
