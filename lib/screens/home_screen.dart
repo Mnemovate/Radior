@@ -3,123 +3,116 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:radior/bloc/radio_bloc.dart';
 import 'package:radior/bloc/radio_event.dart';
 import 'package:radior/bloc/radio_state.dart';
-import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:radior/data/radio_stations.dart';
 import 'package:radior/themes/colors.dart';
+import 'package:radior/themes/sizes.dart';
 import 'package:radior/themes/texts.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
+  static Widget prepare() {
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<RadioBloc>(
+          create: (context) => RadioBloc(stations)..add(PlayPauseEvent()),
+        ),
+      ],
+      child: const HomeScreen(),
+    );
+  }
+
   @override
-  Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => RadioBloc(stations)..add(PlayPauseEvent()),
-      child: Scaffold(
-        appBar: AppBar(
-          centerTitle: true,
-          title: Padding(
-            padding: const EdgeInsets.only(top: 30),
-            child: Text(
-              'Radior',
-              style: titleOnboarding.copyWith(
-                color: RadiorColor.green,
-              ),
+  Widget build(BuildContext context) {    
+    return Scaffold(
+      appBar: AppBar(
+        toolbarHeight: 116,
+        backgroundColor: RadiorColor.white,
+        title: Padding(
+          padding: const EdgeInsets.only(left: 5),
+          child: Text(
+            'Radior',
+            style: titleOnboarding.copyWith(
+              color: RadiorColor.green,
             ),
           ),
         ),
-        backgroundColor: RadiorColor.white,
-        body: BlocBuilder<RadioBloc, RadioState>(
-          builder: (innerContext, state) {
-            final bloc = BlocProvider.of<RadioBloc>(innerContext);
-            String imageUrl = state is RadioPlaying
-              ? state.station.imageUrl
-              : 'https://www.sonora.co.id//assets/v2/images/network/surabaya.png';
-            return Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+      ),
+      backgroundColor: RadiorColor.white,
+      body: BlocBuilder<RadioBloc, RadioState>(
+        builder: (context, state) {
+          final bloc = context.read<RadioBloc>();
+          return Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 23),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(20.0),
-                    child: Image.network(
-                      imageUrl,
-                      height: 300,
-                      fit: BoxFit.cover,
-                    ),
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(12),
+                  child: Image.network(
+                    bloc.getImageUrl(),
+                    height: 280,
+                    width: MediaQuery.of(context).size.width,
+                    fit: BoxFit.fitWidth,
                   ),
                 ),
+                spaceHeight50,
                 Text(
-                  state is RadioPlaying
-                      ? state.station.name
-                      : state is RadioPaused
-                      ? 'Radio dijeda'
-                      : 'Memuat stasiun...',
+                  bloc.getDisplayName(),
                   style: descriptionOnboarding.copyWith(color: RadiorColor.black),
                 ),
+                spaceHeigh20,
                 Text(
-                  state is RadioPlaying ? state.station.description : "...",
+                  bloc.getDescription(),
                   style: descriptionOnboarding.copyWith(color: RadiorColor.black),
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 20.0,
-                    vertical: 20,
-                  ),
-                  child: LinearPercentIndicator(
-                    lineHeight: 8.0,
-                    percent: 0.9,
-                    progressColor: RadiorColor.green,
-                    backgroundColor: RadiorColor.green80,
-                    barRadius: Radius.circular(10),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [Text('03:35'), Text('03:50')],
-                  ),
-                ),
-                SizedBox(height: 50),
+                spaceHeight50,
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     IconButton(
-                      icon: const Icon(Icons.skip_previous),
+                      icon: SvgPicture.asset(
+                        'assets/icons/chevron-left.svg',
+                        width: 20,
+                      ),
                       onPressed: () {
-                        bloc.add(PlayPauseEvent());
                         bloc.add(PreviousStationEvent());
                       },
                     ),
-                    Icon(Icons.replay_10),
                     Container(
+                      width: 60,
+                      height: 60,
                       decoration: BoxDecoration(
                         color: RadiorColor.green,
-                        shape: BoxShape.circle,
+                        borderRadius: BorderRadius.circular(12),
                       ),
                       child: IconButton(
-                        icon: Icon(
-                          state is RadioPlaying ? Icons.pause : Icons.play_arrow,
+                        icon: SvgPicture.asset(
+                          state is RadioPlaying 
+                            ? 'assets/icons/pause.svg'
+                            : 'assets/icons/play.svg',
+                          width: 20,
                           color: RadiorColor.white,
                         ),
                         onPressed: () => bloc.add(PlayPauseEvent()),
                       ),
                     ),
-                    Icon(Icons.forward_10),
                     IconButton(
-                      icon: const Icon(Icons.skip_next),
+                      icon: SvgPicture.asset(
+                        'assets/icons/chevron-right.svg',
+                        width: 20,
+                      ),
                       onPressed: () {
-                        bloc.add(PlayPauseEvent());
                         bloc.add(NextStationEvent());
                       },
                     ),
                   ],
                 ),
               ],
-            );
-          },
-        ),
+            ),
+          );
+        },
       ),
     );
   }
