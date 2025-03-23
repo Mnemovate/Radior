@@ -9,14 +9,29 @@ class RadioBloc extends Bloc<RadioEvent, RadioState> {
   int currentStationIndex = 0;
   final List<RadioStation> stations;
 
-  RadioBloc(this.stations) : super(RadioLoading()) {
+  RadioBloc(this.stations)
+    : super(
+        RadioLoading(
+          RadioStation(
+            name: 'Jakarta - 92.0 fm',
+            streamUrl:
+                'https://cast1.my-control-panel.com/proxy/radioso1/stream',
+            imageUrl:
+                'https://www.sonora.co.id//assets/v2/images/network/jakarta.png',
+            description: '...',
+          ),
+        ),
+      ) {
     on<PlayPauseEvent>((event, emit) async {
       if (state is RadioPlaying) {
         await audioPlayer.pause();
-        emit(RadioPaused());
+        emit(RadioPaused(state.radioStation));
       } else {
         final station = stations[currentStationIndex];
-        await audioPlayer.play(UrlSource(station.streamUrl), mode: PlayerMode.mediaPlayer);
+        await audioPlayer.play(
+          UrlSource(station.streamUrl),
+          mode: PlayerMode.mediaPlayer,
+        );
         emit(RadioPlaying(station));
       }
     });
@@ -25,15 +40,22 @@ class RadioBloc extends Bloc<RadioEvent, RadioState> {
       currentStationIndex = (currentStationIndex + 1) % stations.length;
       final station = stations[currentStationIndex];
       await audioPlayer.stop();
-      await audioPlayer.play(UrlSource(station.streamUrl), mode: PlayerMode.mediaPlayer);
+      await audioPlayer.play(
+        UrlSource(station.streamUrl),
+        mode: PlayerMode.mediaPlayer,
+      );
       emit(RadioPlaying(station));
     });
 
     on<PreviousStationEvent>((event, emit) async {
-      currentStationIndex = (currentStationIndex - 1 + stations.length) % stations.length;
+      currentStationIndex =
+          (currentStationIndex - 1 + stations.length) % stations.length;
       final station = stations[currentStationIndex];
       await audioPlayer.stop();
-      await audioPlayer.play(UrlSource(station.streamUrl), mode: PlayerMode.mediaPlayer);
+      await audioPlayer.play(
+        UrlSource(station.streamUrl),
+        mode: PlayerMode.mediaPlayer,
+      );
       emit(RadioPlaying(station));
     });
   }
@@ -42,5 +64,37 @@ class RadioBloc extends Bloc<RadioEvent, RadioState> {
   Future<void> close() {
     audioPlayer.dispose();
     return super.close();
+  }
+
+  String getImageUrl() {
+    if (state is RadioPlaying ||
+        state is RadioLoading ||
+        state is RadioPaused) {
+      return state.radioStation.imageUrl;
+    } else {
+      return 'https://www.sonora.co.id//assets/v2/images/network/surabaya.png';
+    }
+  }
+
+  String getDescription() {
+    if (state is RadioPlaying ||
+        state is RadioLoading ||
+        state is RadioPaused) {
+      return state.radioStation.description;
+    } else {
+      return "...";
+    }
+  }
+
+  String getDisplayName() {
+    if (state is RadioPlaying) {
+      return state.radioStation.name;
+    } else if (state is RadioPaused) {
+      return 'Radio dijeda';
+    } else if (state is RadioLoading) {
+      return 'Memuat stasiun...';
+    } else {
+      return '';
+    }
   }
 }
