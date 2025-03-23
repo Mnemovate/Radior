@@ -80,7 +80,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> with SingleTickerPr
     
     // Navigate to the home screen
     Navigator.of(context).pushReplacement(
-      MaterialPageRoute(builder: (context) => const HomeScreen()),
+      MaterialPageRoute(builder: (context) => HomeScreen.prepare()),
     );
   }
 
