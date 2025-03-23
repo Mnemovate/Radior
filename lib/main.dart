@@ -46,6 +46,10 @@ class _RadiorState extends State<Radior> with WidgetsBindingObserver {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         scaffoldBackgroundColor: RadiorColor.white,
+        appBarTheme: const AppBarTheme(
+          backgroundColor: RadiorColor.white,
+          elevation: 0,
+        ),
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: BlocProvider(
