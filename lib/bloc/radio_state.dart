@@ -1,12 +1,18 @@
 import 'package:radior/models/radio_station.dart';
 
-abstract class RadioState {}
-
-class RadioLoading extends RadioState {}
-
-class RadioPlaying extends RadioState {
-  final RadioStation station;
-  RadioPlaying(this.station);
+abstract class RadioState {
+  final RadioStation radioStation;
+  RadioState(this.radioStation);
 }
 
-class RadioPaused extends RadioState {}
+class RadioLoading extends RadioState {
+  RadioLoading(super.radioStation);
+}
+
+class RadioPlaying extends RadioState {
+  RadioPlaying(super.radioStation);
+}
+
+class RadioPaused extends RadioState {
+  RadioPaused(super.radioStation);
+}
