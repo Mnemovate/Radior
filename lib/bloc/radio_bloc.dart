@@ -89,8 +89,6 @@ class RadioBloc extends Bloc<RadioEvent, RadioState> {
   String getDisplayName() {
     if (state is RadioPlaying) {
       return state.radioStation.name;
-    } else if (state is RadioPaused) {
-      return 'Radio dijeda';
     } else if (state is RadioLoading) {
       return 'Memuat stasiun...';
     } else {
