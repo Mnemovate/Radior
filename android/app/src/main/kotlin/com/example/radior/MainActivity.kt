@@ -1,4 +1,4 @@
-package com.example.radior
+package com.mnemovate.radior
 
 import io.flutter.embedding.android.FlutterActivity
 
