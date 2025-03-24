@@ -50,11 +50,29 @@ class HomeScreen extends StatelessWidget {
               children: [
                 ClipRRect(
                   borderRadius: BorderRadius.circular(12),
-                  child: Image.network(
-                    bloc.getImageUrl(),
+                  child: Container(
                     height: 280,
                     width: MediaQuery.of(context).size.width,
-                    fit: BoxFit.fitWidth,
+                    color: RadiorColor.green80,
+                    child:
+                        state is RadioLoading
+                            ? Center(
+                              child: SizedBox(
+                                width: 100,
+                                height: 100,
+                                child: CircularProgressIndicator.adaptive(
+                                  strokeWidth: 10,
+                                  valueColor: AlwaysStoppedAnimation(
+                                    RadiorColor.green,
+                                  ),
+                                  strokeCap: StrokeCap.round,
+                                ),
+                              ),
+                            )
+                            : Image.network(
+                              bloc.getImageUrl(),
+                              fit: BoxFit.fitWidth,
+                            ),
                   ),
                 ),
                 spaceHeight50,
