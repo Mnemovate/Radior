@@ -51,7 +51,7 @@ class HomeScreen extends StatelessWidget {
                 ClipRRect(
                   borderRadius: BorderRadius.circular(12),
                   child: Container(
-                    height: 280,
+                    height: 220,
                     width: MediaQuery.of(context).size.width,
                     color: RadiorColor.green80,
                     child:
@@ -75,17 +75,24 @@ class HomeScreen extends StatelessWidget {
                             ),
                   ),
                 ),
-                spaceHeight50,
+                spaceHeight40,
                 Text(
                   bloc.getDisplayName(),
-                  style: descriptionOnboarding.copyWith(color: RadiorColor.black),
+                  style: descriptionOnboarding.copyWith(
+                    fontWeight: FontWeight.w700,
+                    color: RadiorColor.black,
+                  ),
                 ),
-                spaceHeigh20,
+                spaceHeight20,
                 Text(
                   bloc.getDescription(),
-                  style: descriptionOnboarding.copyWith(color: RadiorColor.black),
+                  style: descriptionOnboarding.copyWith(
+                    fontSize: 14,
+                    color: RadiorColor.black,
+                  ),
+                  overflow: TextOverflow.ellipsis,
                 ),
-                spaceHeight50,
+                spaceHeight40,
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
@@ -126,6 +133,92 @@ class HomeScreen extends StatelessWidget {
                       },
                     ),
                   ],
+                ),
+                spaceHeight40,
+                Row(
+                  children: [
+                    Text(
+                      "Daftar Saluran",
+                      style: titleOnboarding,
+                      textAlign: TextAlign.start,
+                    ),
+                  ],
+                ),
+                spaceHeight20,
+                Flexible(
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: stations.length,
+                    itemBuilder: (context, index) {
+                      final station = stations[index];
+                      
+                      final isPlaying = true; // jika state saat ini sama
+                      
+                      return Container(
+                        padding: EdgeInsets.all(14),
+                        decoration: BoxDecoration(
+                          color: isPlaying ? RadiorColor.green : RadiorColor.green80,
+                          borderRadius: BorderRadius.circular(6),
+                        ),
+                        margin: EdgeInsets.only(bottom: (stations.length - 1) == index ? 0 : 18),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(6),
+                              child: Image.network(
+                                station.imageUrl,
+                                width: 50,
+                                height: 50,
+                                fit: BoxFit.cover,
+                                errorBuilder: (context, error, stackTrace) {
+                                  return Container(
+                                    width: 50,
+                                    height: 50,
+                                    color: Colors.grey[300],
+                                    child: const Icon(Icons.music_note, color: Colors.teal),
+                                  );
+                                },
+                              ),
+                            ),
+                            spaceWidth20,
+                            Expanded(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    station.name,
+                                    style: descriptionOnboarding.copyWith(
+                                      fontWeight: FontWeight.w700,
+                                      color: RadiorColor.black,
+                                    ),
+                                  ),
+                                  Text(
+                                    station.description,
+                                    style: descriptionOnboarding.copyWith(
+                                      fontSize: 14,
+                                      color: RadiorColor.black,
+                                    ),
+                                    overflow: TextOverflow.ellipsis,
+                                  )
+                                ],
+                              ),
+                            ),
+                            IconButton(
+                              icon: SvgPicture.asset(
+                                isPlaying ? 'assets/icons/pause.svg' : 'assets/icons/play.svg',
+                                width: 20,
+                              ),
+                              onPressed: () {
+                                // isPlaying play or pause
+                              },
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                  ),
                 ),
               ],
             ),
