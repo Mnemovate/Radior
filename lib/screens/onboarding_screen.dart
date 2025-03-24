@@ -235,7 +235,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> with SingleTickerPr
             style: titleOnboarding,
             textAlign: TextAlign.center,
           ),
-          spaceHeigh20,
+          spaceHeight20,
           Text(
             description,
             style: descriptionOnboarding,
